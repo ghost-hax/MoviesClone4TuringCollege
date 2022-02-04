@@ -8,8 +8,8 @@
 import Foundation
 import SystemConfiguration
 
-final class Rechability {
-    static let shared = Rechability()
+final class Reachability {
+    static let shared = Reachability()
     private init() {}
     
     func isInternetAvailable() -> Bool {
