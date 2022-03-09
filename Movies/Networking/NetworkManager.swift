@@ -8,14 +8,6 @@
 import Foundation
 import Combine
 
-enum ServiceError: Error {
-    case failedToCreateRequest
-    case dataNotFound
-    case parsingError
-    case networkNotAvailable
-
-}
-
 protocol Networkable {
     func doApiCall(apiRequest:ApiRequestType)-> Future<Data, ServiceError>
 }
@@ -29,9 +21,9 @@ class NetworkManager: Networkable {
     func doApiCall(apiRequest: ApiRequestType) -> Future<Data, ServiceError> {
         return Future { [weak self] promise in
             
-            guard Rechability.shared.isInternetAvailable() == true
+            guard Reachability.shared.isInternetAvailable() == true
                 else {
-                    return                 promise(.failure(ServiceError.networkNotAvailable))
+                    return promise(.failure(ServiceError.networkNotAvailable))
                 }
             
             guard let request = URLRequest.getURLRequest(for: apiRequest) else {
